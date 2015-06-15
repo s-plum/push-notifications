@@ -1,0 +1,32 @@
+{
+  "name": "push-notification-test",
+  "version": "0.1.0",
+  "description": "Testing push notifications with javascript and such",
+  "repository": "",
+  "dependencies": {
+    "body-parser": "^1.12.4",
+    "browser-request": "^0.3.3",
+    "dotenv": "^1.1.0",
+    "express": "^4.12.4",
+    "gulp-nodemon": "^2.0.3",
+    "request": "^2.57.0"
+  },
+  "devDependencies": {
+    "browserify": "^10.2.1",
+    "del": "^1.2.0",
+    "gulp": "^3.8.11",
+    "gulp-autoprefixer": "^2.3.0",
+    "gulp-compass": "^2.1.0",
+    "gulp-if": "^1.2.5",
+    "gulp-jshint": "^1.11.0",
+    "gulp-livereload": "^3.8.0",
+    "gulp-plumber": "^1.0.1",
+    "gulp-streamify": "0.0.5",
+    "gulp-uglify": "^1.2.0",
+    "gulp-watch": "^4.2.4",
+    "gulp-webserver": "^0.9.1",
+    "jshint-stylish": "^2.0.0",
+    "vinyl-source-stream": "^1.1.0",
+    "yargs": "^3.9.1"
+  }
+}

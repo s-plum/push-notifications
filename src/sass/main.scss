@@ -1,0 +1,30 @@
+/* avast, matey, acquire ye compass */
+@import "materialize/materialize",
+        "normalize", 
+        "functions",
+        "variables",
+        "mixins";
+
+body {
+  font: 1rem Arial, Helvetica, sans-serif;
+}
+
+.valign-wrapper {
+    bottom: 0;
+    flex-flow: row wrap;
+    left: 0;
+    position: fixed;
+    right: 0;
+    top: 0;
+
+    .valign {
+        width: 100%;
+    }
+}
+
+#push-controls {
+    opacity: 1;
+    &[disabled] {
+        opacity: 0;
+    }
+}

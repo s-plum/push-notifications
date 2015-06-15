@@ -1,0 +1,7 @@
+.sass-cache
+.DS_Store
+dist/css
+dist/js
+dist/img
+dist/index.html
+node_modules
