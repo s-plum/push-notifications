@@ -10,13 +10,13 @@
 4. Push it!
 
 ## Local build commands
-* `gulp build`<br/>
+* `gulp build` ->
     Compiles project CSS, Javascript, images, and HTML from `src` and saves to `dist`
-* `gulp serve`<br/>
+* `gulp serve` ->
     Compiles project files and starts the local server
 
 Either command can be run with one or more of the following options:
-* `--watch`<br/>
+* `--watch` ->
     Watch for changes, and re-compile the project files when changes are made to `src`
-* `--minify`<br/>
+* `--minify` ->
     Re-compiles project files with production-ready minified Javascript
