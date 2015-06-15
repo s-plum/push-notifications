@@ -5,9 +5,10 @@
 ## Running locally
 
 1. Clone the repo and run `npm install` from the local repo root.
-2. Start up the server with `gulp serve`.
-3. Open http://localhost:3000 in Chrome. You will need to [make sure notifications are enabled](https://support.google.com/chrome/answer/3220216?hl=en) in order for the demo to work properly.
-4. Push it!
+2. Start up your local mongo instance, if it is not already running on your local machine. If you do not have mongo installed on your machine, [get it up and running](http://docs.mongodb.org/manual/installation/) before you proceed.
+3. Start up the server with `gulp serve`.
+4. Open http://localhost:3000 in Chrome. You will need to [make sure notifications are enabled](https://support.google.com/chrome/answer/3220216?hl=en) in order for the demo to work properly.
+5. Push it!
 
 ## Local build commands
 * `gulp build` →

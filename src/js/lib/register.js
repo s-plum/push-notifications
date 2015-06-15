@@ -3,38 +3,59 @@
 var ui = require('./ui-switch'),
     request = require('browser-request');
 
+
+/*
+ * @function getEndpoint -> returns endpoint for sending back to web service, with handling for legacy implementations of the push API
+ * @param pushSubscription {object} -> the push subscription object
+ */
+var getEndpoint = function(pushSubscription) {
+    //get the endpoint with subscription ID to send back to the service
+    var endpoint = pushSubscription.endpoint;
+
+    //handle legacy push subscription
+    if ('subscriptionId' in pushSubscription) {
+        if (!endpoint.includes(pushSubscription.subscriptionId)) {
+            endpoint += '/' + pushSubscription.subscriptionId;
+        }
+    }
+    return endpoint;
+}
+
 var onPushSubscription = function(pushSubscription) {
     console.log('push subscription endpoint = ' + pushSubscription.endpoint);
+
+    var endpoint = getEndpoint(pushSubscription);
+
+    //register the device with the subscription service
+    request({ 
+        url: '/subscribe',
+        body: {
+            endpoint: endpoint
+        },
+        json: true,
+        method: 'POST'
+    }, function(error, response, body) {
+        if (error) {
+            console.error('Error when registering device ', error);
+        }
+    })
 
     ui.enable();
     ui.button.disabled = false;
 
-    //enable the button that will send trigger to server to send push subscription
+    //enable the button that will send trigger to server to send push subscription for the demo
     ui.button.onclick = function(e) {
         e.preventDefault();
 
-        var endpoint = pushSubscription.endpoint;
-
-        //handle legacy push subscription
-        if ('subscriptionId' in pushSubscription) {
-            if (!endpoint.includes(pushSubscription.subscriptionId)) {
-                endpoint += '/' + pushSubscription.subscriptionId;
-            }
-        }
-
         request({
             url: '/push',
-            body: {
-                endpoint: endpoint
-            },
-            json: true,
             method: 'POST'
         }, function(error, response, body) {
             if (error) {
                 console.warn('Error when sending push trigger ' + error);
             }
             else {
-                console.log(body);
+                console.log('Request to send push notification has been sent successfully');
             }
         });
     }
@@ -114,18 +135,34 @@ module.exports = {
                         return;
                     }
 
-                    //TODO - remove device details from server
-                    pushSubscription.unsubscribe().then(function(successful) {
-                        console.log('unsubscribed from push: ' + successful);
-                        if (!successful) {
-                            console.error('unable to unregister from push');
+                    //remove device from server
+                    request({
+                        url: '/unsubscribe',
+                        body: {
+                            endpoint: getEndpoint(pushSubscription)
+                        },
+                        json: true,
+                        method: 'POST'
+                    }, function(error, response, body) {
+                        if (error) {
+                            console.error('Error unsubscribing from server ', error);
+                            ui.enable();
+                            ui.check();
                         }
-                        ui.enable();
-                    })
-                    .catch(function(e) {
-                        console.log('Unsubscription error: ' + e);
-                        ui.enable();
-                        ui.check();
+                        else {
+                            pushSubscription.unsubscribe().then(function(successful) {
+                                console.log('unsubscribed from push: ' + successful);
+                                if (!successful) {
+                                    console.error('unable to unregister from push');
+                                }
+                                ui.enable();
+                            })
+                            .catch(function(e) {
+                                console.log('Unsubscription error: ' + e);
+                                ui.enable();
+                                ui.check();
+                            });
+                        }
                     });
                 }.bind(this)).catch(function(e) {
                     console.error('Error thrown while revoking push notifications: ' + e);
