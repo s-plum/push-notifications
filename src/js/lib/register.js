@@ -53,6 +53,7 @@ var onPushSubscription = function(pushSubscription) {
         }, function(error, response, body) {
             if (error) {
                 console.warn('Error when sending push trigger ' + error);
+                return;
             }
             else {
                 console.log('Request to send push notification has been sent successfully');
