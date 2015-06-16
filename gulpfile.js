@@ -33,7 +33,7 @@ var env = argv.env || argv.e || 'dev',
     shouldMinify = argv.minify,
     shouldWatch = argv.watch;
 
-var buildTasks = ['scripts', 'html', 'sassy', 'images'];
+var buildTasks = ['scripts', 'copy', 'sassy', 'images'];
 
 if (shouldWatch) {
     buildTasks.push('watch');
@@ -51,9 +51,9 @@ gulp.task('watch:scripts', function() {
   });
 });
 
-gulp.task('watch:html', function() {
-  watch(['src/**/*.html', '!src/js/plugins/**/*.html'], function(files) {
-    gulp.start('html');
+gulp.task('watch:copy', function() {
+  watch(['src/**/*.html'], function(files) {
+    gulp.start('copy');
   });
 });
 
@@ -69,11 +69,7 @@ gulp.task('watch:sass', function() {
   });
 });
 
-gulp.task('watch', ['watch:scripts','watch:html','watch:images', 'watch:sass']);
-
-gulp.task('clean:html', function (cb) {
-  del(['dist/**/*.html'], cb)
-});
+gulp.task('watch', ['watch:scripts','watch:copy','watch:images', 'watch:sass']);
 
 gulp.task('clean:sass', function (cb) {
   del(['dist/css/**/*'], cb)
@@ -100,12 +96,15 @@ gulp.task('scripts', function() {
     }); 
 });
 
-gulp.task('html', ['clean:html'], function () {
-  gulp.src(['src/**/*.html', '!src/js/plugins/**/*.html'])
-    .pipe(plumber({
-      errorHandler: onError
-    }))
-    .pipe(gulp.dest('./dist'))
+gulp.task('copy', function () {
+  gulp.src(['src/*', '!src/js', '!src/sass'])
+    .pipe(gulp.dest('./dist'));
+
+  gulp.src(['src/elements/**/*.html'])
+    .pipe(gulp.dest('./dist/elements'));
+
+  gulp.src(['bower_components/**/*'])
+    .pipe(gulp.dest('./dist/bower_components'))
     .pipe(gulpIf(shouldWatch, livereload()));
 });
  
