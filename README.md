@@ -1,6 +1,6 @@
 # Push It Real Good
 
-> Testing push notifications with plain vanilla Javascript and a bit of Salt-N-Pepa
+> Testing push notifications with [Polymer](https://www.polymer-project.org/1.0/) and a bit of Salt-N-Pepa
 
 ## Running locally
 

@@ -5,6 +5,8 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1"/>
 	<link rel="stylesheet" href="css/main.css"/>
     <link rel="manifest" href="manifest.json">
+    <script src="bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+    <link rel="import" href="elements/elements.html">
 	<title>Push Notification Test</title>
 </head>
 <body>
@@ -19,6 +21,12 @@
         <div class="center-align valign"><button disabled id="push-controls" class="waves-effect waves-light btn" type="button">Push it real good</button></div>
     </div>
 
-	<script src="js/main.min.js"></script>
+    <platinum-push-messaging
+      title="You received a push message!"
+      message="Yay! Now you can play around customizing it"
+    >
+    </platinum-push-messaging>
+
+	<script src="/js/main.min.js"></script>
 </body>
 </html>
